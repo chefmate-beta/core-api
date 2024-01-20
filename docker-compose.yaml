@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+  db:
+    image: "mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes: 
+      - ./db:/var/lib/mysql # fake values
+
+volumes:
+  db-data:
+
+# docker-compose up : run the containers
+# docker-compose down : stop the containers            
