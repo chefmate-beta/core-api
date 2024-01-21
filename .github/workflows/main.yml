@@ -1,29 +1,25 @@
 name: 'Deploy to Google App Engine'
 
-on:
-  pull_request:
-    branches:
-    - main
-    - integration
+on: workflow_dispatch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+    - name: 'Checkout repository'
+      uses: actions/checkout@v2
+    
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
-        credentials_json '${{ secrets.GCP_CREDENTIALS }}'
+        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
         
     - name: 'Set up Google Cloud SDK'
       uses: google-github-actions/setup-gcloud@v2
 
     - name: 'Use gcloud CLI'
       run: 'gcloud info'  
-        
-    - name: 'Checkout repository'
-      uses: actions/checkout@v2
       
     - name: 'App Deloy to App Engine'
       run: gcloud app deploy --quiet
